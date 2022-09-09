@@ -81,7 +81,7 @@ public class SecunityConfiguration {
 //	}
 	
 	
-   // @Bean
+//    @Bean
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
