@@ -21,6 +21,36 @@ public class AuthenticatedUser implements UserDetails {
 	
 	private boolean locked;
 	
+	private String empNo;
+	
+	private String deptName;
+	
+	private String posName;
+	
+	public String getEmpNo() {
+		return empNo;
+	}
+
+	public void setEmpNo(String empNo) {
+		this.empNo = empNo;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public String getPosName() {
+		return posName;
+	}
+
+	public void setPosName(String posName) {
+		this.posName = posName;
+	}
+
 	private String roles;
 
 	@Override

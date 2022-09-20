@@ -29,6 +29,11 @@
            <button type="submit" class="btn btn-primary">ログイン</button>
        </div>
      </form>
+
+     <div class="py-1" th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']}">
+      <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION']}"></span>
+     </div>
+
    </div>
 
     <!-- Optional JavaScript -->

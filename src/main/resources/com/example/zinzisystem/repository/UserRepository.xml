@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.zinzisystem.repository.UserRepository">
-  
-  	<select id="getUser" parameterType="java.lang.String" resultMap="userDetails">
+
+	<insert id="registrationUser" parameterType="com.example.zinzisystem.auth.User"
+	        useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT INTO users (username, password, email, locked, expired)
+		VALUES (#{username}, #{password}, #{email}, false, false)
+	]]>
+	</insert>
+	
+	<insert id="registrationAuthorities" parameterType="com.example.zinzisystem.auth.User"
+	        useGeneratedKeys="true" keyProperty="id">
+	<![CDATA[
+		INSERT INTO authorities (id, username, authority)
+		VALUES (#{id}, #{username}, ROLE_USER)
+	]]>
+	</insert>
+	
+	<select id="getUser" parameterType="java.lang.String" resultMap="userDetails">
 	<![CDATA[
 		SELECT 	users.id,
 				users.email,
@@ -27,4 +43,44 @@
 		<result property="expired" column="expired" />
 		<result property="roles" column="authority" />
 	</resultMap>
+	
+	
+	<select id="loadUserList" parameterType="com.example.zinzisystem.form.UserSearchForm"
+			resultType="com.example.zinzisystem.auth.AuthenticatedUser">
+	<![CDATA[
+		SELECT  U.EMAIL                 AS email,
+		        U.EMP_NO                AS empNo,
+		        U.NAME                  AS username,
+		        DP.DEPT_NM              AS deptName,
+		        POS.POS_NM              AS posName
+		FROM    USERS U
+		INNER JOIN DEPTS DP
+		ON      DP.DEPT_CD       =  U.DEPT_CD
+
+		INNER JOIN POSITIONS POS
+		ON      POS.POS_CD       =  U.POS_CD
+
+	]]>
+	<if test="empNo != null">
+	<![CDATA[
+		AND    U.EMP_NO     =  #{empNo}
+	]]>
+	</if>
+	<if test="name != null">
+	<![CDATA[
+		AND    U.NAME       =  #{name}
+	]]>
+	</if>
+	<if test="deptCd != null">
+	<![CDATA[
+		AND    U.DEPT_CD    =  #{deptCd}
+	]]>
+	</if>
+	<if test="posCd != null">
+	<![CDATA[
+		AND    U.POS_CD     =  #{posCd}
+	]]>
+	</if>
+	</select>
+		
 </mapper>

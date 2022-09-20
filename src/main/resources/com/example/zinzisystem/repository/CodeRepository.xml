@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.zinzisystem.repository.CodeRepository">
+
+		<select id="getDepertmentCd" resultType="com.example.zinzisystem.common.Option">
+	<![CDATA[
+		SELECT  DP.DEPT_CD          AS code,
+        		DP.DEPT_NM          AS name
+		FROM    DEPTS DP
+		
+	]]>
+	</select>
+	
+	<select id="getPositionCd" resultType="com.example.zinzisystem.common.Option">
+	<![CDATA[
+		SELECT  POS.POS_CD          AS code,
+		        POS.POS_NM          AS name
+		FROM    POSITIONS POS
+		
+	]]>
+	</select>
+
+</mapper>

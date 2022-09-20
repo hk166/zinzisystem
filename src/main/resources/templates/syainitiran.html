@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,7 +11,92 @@
     <title>社員一覧</title>
   </head>
   <body>
-    <h1>社員一覧</h1>
+    <div class="cover"></div>
+	<div class="main d-flex flex-column">
+		<form th:action="@{/kanri/userSerach}" th:object="${userSearchForm}">
+			<div class="p-3">
+				<h4>ユーザ―情報一覧</h4>
+			</div>
+			<div class="bg-white sticky-top p-3">
+				<!-- 検索条件 -->
+				<div class="d-flex align-items-between">
+					<h5 class="me-2">検索条件</h5>
+				</div>
+				<div id="searchCondition" class="collapse show">
+					<div class="border p-3 rounded">
+						<div class="d-flex align-items-top mb-2">
+							<strong style="width: 10rem;">社員番号</strong>
+							<input type="text" class="form-control form-control-sm" style="width: 10rem;"
+									th:field="*{empNo}" />
+						</div>
+						<div class="d-flex align-items-top mb-2">
+							<strong style="width: 10rem;">氏名</strong>
+							<input type="text" class="form-control form-control-sm" style="width: 16rem;"
+									th:field="*{name}" />
+						</div>
+						<div class="d-flex align-items-top mb-2">
+							<strong style="width: 10rem;">所属部署</strong>
+							<select class="form-select form-select-sm" style="width: 16rem;" th:field="*{deptCd}">
+								<option value="">-- 選択してください</option>
+								<option th:each="option : *{deptOptions}" th:value="${option.code}"
+										th:text="${option.name}"></option>
+							</select>
+						</div>
+						<div class="d-flex align-items-top mb-2">
+							<strong style="width: 10rem;">役職</strong>
+							<select class="form-select form-select-sm" style="width: 16rem;" th:field="*{posCd}">
+								<option value="">-- 選択してください</option>
+								<option th:each="option : *{posOptions}" th:value="${option.code}"
+										th:text="${option.name}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="py-2">
+					<button class="btn btn-success btn-sm shadow-sm px-3">
+						<span>検索実行</span>
+					</button>
+				</div>
+			</div>
+		</form>
+		<!-- 検索結果 -->
+		<div class="overflow-auto mh-100 flex-grow-1 px-3">
+			<div class="table-fixed-header">
+				<table class="table table-sm table-striped m-0">
+					<col width="5%"/>
+					<col width="15%"/>
+					<col width="25%"/>
+					<col width="30%"/>
+					<col width="25%"/>
+					<thead>
+						<tr>
+							<th class="sticky-top bg-white text-truncate"></th>
+							<th class="sticky-top bg-white text-truncate">社員番号</th>
+							<th class="sticky-top bg-white text-truncate">氏名</th>
+							<th class="sticky-top bg-white text-truncate">所属部署</th>
+							<th class="sticky-top bg-white text-truncate">役職</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="user : ${userlist}">
+							<td>
+								<a href="#">
+									<i class="bi bi-pen"></i>
+								</a>
+							</td>
+							<td th:text="${user.empNo}"></td>
+							<td th:text="${user.username}"></td>
+							<td th:text="${user.deptName}"></td>
+							<td th:text="${user.posName}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="position-sticky top-100 start-0 py-2">
+					
+				</div>
+			</div>
+		</div>
+	</div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
